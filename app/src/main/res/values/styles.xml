@@ -1,0 +1,8 @@
+<resources>
+    <style name="DxTheme" parent="android:style/Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">#080A12</item>
+        <item name="android:colorAccent">#8A68FF</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

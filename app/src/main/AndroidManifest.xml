@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <uses-feature android:name="android.hardware.type.watch" android:required="true" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <application android:name=".DxApplication" android:label="@string/app_name" android:icon="@drawable/ic_dx"
+        android:theme="@style/DxTheme" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" tools:targetApi="31" android:supportsRtl="true">
+        <uses-library android:name="com.google.android.wearable" android:required="false" />
+        <meta-data android:name="com.google.android.wearable.standalone" android:value="true" />
+        <provider android:name=".ButtonReportProvider" android:authorities="${applicationId}.diagnostics"
+            android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/report_file_paths" />
+        </provider>
+        <activity android:name=".MainActivity" android:exported="true" android:taskAffinity="com.dynorixz.buttonscontrol.main">
+            <intent-filter><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.LAUNCHER" /></intent-filter>
+        </activity>
+        <activity android:name=".QuickActionsActivity" android:exported="false" android:noHistory="true" android:excludeFromRecents="true" android:launchMode="singleTop" android:taskAffinity="com.dynorixz.buttonscontrol.quick" />
+        <activity android:name=".FlashlightActivity" android:exported="false" android:noHistory="true" android:excludeFromRecents="true" android:taskAffinity="com.dynorixz.buttonscontrol.flashlight" />
+        <activity android:name=".MediaControlsActivity" android:exported="false" android:noHistory="true" android:excludeFromRecents="true" android:taskAffinity="com.dynorixz.buttonscontrol.media" />
+        <service android:name=".DxButtonAccessibilityService" android:label="@string/service_name" android:exported="true" android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter><action android:name="android.accessibilityservice.AccessibilityService" /></intent-filter>
+            <meta-data android:name="android.accessibilityservice" android:resource="@xml/accessibility_service" />
+        </service>
+        <service android:name=".MediaAccessService" android:label="@string/media_access" android:exported="true" android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter><action android:name="android.service.notification.NotificationListenerService" /></intent-filter>
+            <meta-data android:name="android.service.notification.default_filter_types" android:value="0" />
+            <meta-data android:name="android.service.notification.disabled_filter_types" android:value="ongoing|conversations|alerting|silent" />
+        </service>
+    </application>
+</manifest>

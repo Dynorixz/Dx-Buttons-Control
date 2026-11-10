@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Dx Buttons Control</string>
+    <string name="service_name">Dx · Управление нижней кнопкой</string>
+    <string name="media_access">Dx · Доступ к MediaSession</string>
+    <string name="service_description">Обрабатывает доступные аппаратные события нижней кнопки и определяет циферблат по метаданным активного окна. Приложение не читает тексты, пароли или содержимое уведомлений. Настройки хранятся только на часах. Доступность кнопки зависит от прошивки. Разрешение включается вручную и может быть отключено в любой момент.</string>
+</resources>

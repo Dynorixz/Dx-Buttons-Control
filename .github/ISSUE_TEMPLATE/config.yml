@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Установка и решение проблем
+    url: https://github.com/Dynorixz/Dx-Buttons-Control/blob/main/docs/INSTALLATION.md
+    about: Инструкция по ADB, калибровке и обновлению.
+  - name: Автор / Dynorixz Studio
+    url: https://t.me/dynorixz
+    about: Связь с автором; не публикуйте секреты в открытых Issue.
