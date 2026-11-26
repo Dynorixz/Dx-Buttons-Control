@@ -1,0 +1,42 @@
+name: Ошибка / Bug report
+description: Проблема с кнопкой, жестом, действием или интерфейсом
+title: '[Bug] '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Укажите реальную модель и поведение. Не публикуйте пароли, ADB-коды или полный системный logcat.
+        Для Ultra 1.1.2 пока является проверочным выпуском. Экранная проверка команды не проверяет физический жест.
+  - type: input
+    id: version
+    attributes:
+      label: Версия приложения / App version
+      placeholder: 1.1.2-ultra-test, signed release
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Модель и система / Model and OS
+      description: Код SM-L…, Android API, версия прошивки; One UI Watch только если известна.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Шаги, ожидаемый и фактический результат
+      description: Физическая кнопка или экранная проверка? Циферблат или приложение? Экран включён?
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: Диагностика кнопки и результат действия
+      description: При отказе калибровки нужны name/descriptor/id/source/isVirtual и причины. Проверьте JSON перед публикацией.
+      render: json
+  - type: textarea
+    id: context
+    attributes:
+      label: Дополнительные условия
+      description: Настройка Samsung Back, Wallet/Pay/Health, другие Accessibility-фильтры, воспроизводимость.
