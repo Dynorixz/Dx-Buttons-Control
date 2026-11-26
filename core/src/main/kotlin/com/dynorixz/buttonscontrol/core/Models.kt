@@ -72,7 +72,7 @@ object ButtonSafety {
                 when (binding.deviceName) {
                     "pmic_resin" -> if (binding.scanCode !in setOf(114, 580)) add(ButtonRejection.STEM_PRIMARY_SCAN_UNVERIFIED)
                     "gpio_keys" -> {
-                        if (!ButtonDeviceEnvironment(binding.deviceManufacturer, binding.deviceModel).isSamsungUltraL705()) add(ButtonRejection.DEVICE_MODEL_UNVERIFIED)
+                        if (!ButtonDeviceEnvironment(binding.deviceManufacturer, binding.deviceModel).supportsGpioBackProfile()) add(ButtonRejection.DEVICE_MODEL_UNVERIFIED)
                         if (binding.scanCode != 580) add(ButtonRejection.STEM_PRIMARY_SCAN_UNVERIFIED)
                         if (binding.eventSource != 0x101) add(ButtonRejection.EVENT_SOURCE_UNVERIFIED)
                     }

@@ -96,6 +96,7 @@ import kotlinx.coroutines.withContext
         }
     }
     BackHandler(enabled = route != "home") {
+        if (route == "watch8_probe" && vm.watch8Probe.recordSystemBack()) return@BackHandler
         route = when(route) {
             "category", "apps", "argument" -> "actions"
             "actions" -> if (target == "sequence") "sequence" else if(target.startsWith("quick")) "quick_edit" else "gesture"
@@ -103,7 +104,7 @@ import kotlinx.coroutines.withContext
             "permissions", "advanced", "rhythm", "calibration", "quick_edit", "exclusions" -> "settings"
             "data", "capture", "diagnostics", "help", "reset" -> "advanced"
             "json" -> "data"
-            "button_report" -> "calibration"
+            "button_report" -> if (BuildConfig.WATCH8_DIAGNOSTIC && vm.watch8Probe.state.value.started) "watch8_probe" else "calibration"
             else -> "home"
         }
     }
@@ -151,6 +152,10 @@ import kotlinx.coroutines.withContext
                 item { DxInfo(message) }
                 item { DxButton("Диагностика", { route = "diagnostics" }) }
             }
+            "watch8_probe" -> Watch8ProbeScreen(vm, d, onReport = { route = "button_report" }, onExit = {
+                vm.watch8Probe.cancel()
+                route = "home"
+            })
             "calibration" -> CalibrationScreen(vm, s, d) { route = "button_report" }
             "diagnostics" -> DiagnosticsScreen(vm, d) { route = "button_report" }
             "button_report" -> ButtonReportScreen(vm, s, d, message) {

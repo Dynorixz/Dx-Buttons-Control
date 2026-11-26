@@ -2,9 +2,9 @@
 
 ## Выбор APK
 
-Скачайте отдельный `dx-buttons-control-1.1.2-ultra-test-wear-release.apk` из [релиза](https://github.com/Dynorixz/Dx-Buttons-Control/releases/tag/v1.1.2-ultra-test). Это подписанный установщик для часов Wear OS, versionCode 5. ZIP — исходники; debug artifacts GitHub Actions — результаты проверки сборки с другой подписью.
+Выберите версию по [таблице моделей](DOWNLOADS.md) и скачайте APK из её GitHub Release. **1.1.0** — базовый выпуск для совместимых часов, а для Ultra, Watch6 Classic и Watch8 Classic есть выпуски с конкретными профилями. Сверьте код модели в настройках часов.
 
-**1.1.2 — предварительная сборка для проверки Ultra SM-L705.** Новый APK на часах клиента ещё не испытывался. Для других устройств смотрите [совместимость](COMPATIBILITY.md).
+ZIP содержит исходники. Архивный 1.0.1-debug и результаты сборки GitHub Actions используют debug-подпись.
 
 ## Беспроводной ADB
 
@@ -16,7 +16,7 @@
 adb pair <WATCH_IP>:<PAIRING_PORT>
 adb connect <WATCH_IP>:<CONNECTION_PORT>
 adb devices -l
-adb install -r dx-buttons-control-1.1.2-ultra-test-wear-release.apk
+adb install -r <DOWNLOADED_APK>
 adb shell am start -W -n com.dynorixz.buttonscontrol/.MainActivity
 ```
 
@@ -35,7 +35,7 @@ adb shell am start -W -n com.dynorixz.buttonscontrol/.MainActivity
 
 ## Обновление и резервная копия
 
-Release 1.1.0, 1.1.1-diagnostics и 1.1.2-ultra-test используют один сертификат. `adb install -r` обновляет такую установку без удаления данных. После диагностической версии Ultra **заново калибруйте кнопку**.
+Все подписанные студийные release APK используют один сертификат. `adb install -r` обновляет такую установку без удаления данных. После диагностической версии Ultra **заново калибруйте кнопку**.
 
 Debug подписан другим ключом. При `INSTALL_FAILED_UPDATE_INCOMPATIBLE` сначала экспортируйте настройки и сохраните JSON **за пределами данных приложения**. Только затем можно удалить debug и установить release. Удаление приложения удаляет его локальные файлы экспорта.
 

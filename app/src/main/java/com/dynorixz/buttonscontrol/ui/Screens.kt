@@ -29,6 +29,7 @@ import com.dynorixz.buttonscontrol.core.*
     DxList("Buttons Control", if(d.connected && s.button != null) "Нижняя кнопка · Готово" else "Нужна настройка") {
         if(!d.connected) item { DxCard("Включить службу", icon = "bolt") { vm.permissions(Settings.ACTION_ACCESSIBILITY_SETTINGS) } }
         else if(s.button == null) item { DxCard("Настроить кнопку", icon = "bolt") { navigate("calibration") } }
+        if (BuildConfig.WATCH8_DIAGNOSTIC) item { DxCard("Проверить нижнюю кнопку", icon = "info") { navigate("watch8_probe") } }
         storageError?.let { item { DxInfo(it) } }
         Gesture.entries.forEach { gesture -> item {
             DxGestureCard(gesture, vm.actionLabel(s.gesture(gesture).action), s.assigned(gesture)) { onGesture(gesture) }

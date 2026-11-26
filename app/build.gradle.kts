@@ -8,6 +8,8 @@ val releaseSigning = releaseSigningFile.orNull?.let { path ->
     Properties().apply { rootProject.file(path).inputStream().use { load(it) } }
 }
 
+val watch8Diagnostic = providers.gradleProperty("dxWatch8Diagnostic").map(String::toBoolean).orElse(false)
+
 android {
     namespace = "com.dynorixz.buttonscontrol"
     compileSdk { version = release(37) }
@@ -16,8 +18,9 @@ android {
         applicationId = "com.dynorixz.buttonscontrol"
         minSdk = 30
         targetSdk = 36
-        versionCode = 5
-        versionName = "1.1.2-ultra-test"
+        versionCode = 8
+        versionName = if (watch8Diagnostic.get()) "1.1.5-watch8-diag" else "1.1.5"
+        buildConfigField("boolean", "WATCH8_DIAGNOSTIC", watch8Diagnostic.get().toString())
     }
     buildFeatures { compose = true; buildConfig = true }
     compileOptions {

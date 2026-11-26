@@ -11,7 +11,10 @@ class MainActivity : ComponentActivity() {
     private val model: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val startScreen = intent.getStringExtra("screen")?.takeIf { it in setOf("hold_test", "calibration", "about", "settings", "diagnostics", "button_report") } ?: "home"
+        val requestedScreen = intent.getStringExtra("screen")?.takeIf {
+            it in setOf("hold_test", "calibration", "about", "settings", "diagnostics", "button_report")
+        }
+        val startScreen = requestedScreen ?: if (BuildConfig.WATCH8_DIAGNOSTIC) "watch8_probe" else "home"
         setContent { DxTheme { DxApp(model, startScreen) } }
     }
     override fun onResume() { super.onResume(); model.refresh() }

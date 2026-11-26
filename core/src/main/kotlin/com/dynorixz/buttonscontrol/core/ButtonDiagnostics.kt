@@ -4,8 +4,16 @@ import kotlinx.serialization.Serializable
 import java.util.Locale
 
 @Serializable data class ButtonDeviceEnvironment(val manufacturer: String = "", val model: String = "") {
-    fun isSamsungUltraL705() = manufacturer.equals("samsung", true) && ultraModel.matches(model.uppercase(Locale.ROOT))
-    companion object { private val ultraModel = Regex("SM-L705[A-Z0-9]?") }
+    fun supportsGpioBackProfile(): Boolean {
+        if (!manufacturer.equals("samsung", ignoreCase = true)) return false
+        val modelCode = model.uppercase(Locale.ROOT)
+        return modelCode in exactGpioModels || ultraModel.matches(modelCode)
+    }
+
+    companion object {
+        private val ultraModel = Regex("SM-L705[A-Z0-9]?")
+        private val exactGpioModels = setOf("SM-R960", "SM-L505F")
+    }
 }
 
 @Serializable enum class DeviceLookupState { PENDING, READY, NOT_FOUND, ERROR, REMOVED }
@@ -28,8 +36,8 @@ import java.util.Locale
     SCAN_CODE_MISSING("scanCode отсутствует или равен нулю"),
     DESCRIPTOR_MISSING("InputDevice.descriptor пуст"),
     STEM_PRIMARY_DEVICE_UNVERIFIED("STEM_PRIMARY поступил от источника без разрешённого аппаратного профиля"),
-    STEM_PRIMARY_SCAN_UNVERIFIED("ScanCode не соответствует профилю: pmic_resin 580/114, gpio_keys на Ultra SM-L705 только 580"),
-    DEVICE_MODEL_UNVERIFIED("Для gpio_keys + STEM_PRIMARY нужен Samsung Galaxy Watch Ultra семейства SM-L705"),
+    STEM_PRIMARY_SCAN_UNVERIFIED("ScanCode не соответствует профилю: pmic_resin 580/114, gpio_keys только 580"),
+    DEVICE_MODEL_UNVERIFIED("Для gpio_keys + STEM_PRIMARY нет профиля для этой модели Samsung. Профили GPIO: SM-L705 (Ultra), SM-R960 (Watch6 Classic), SM-L505F (Watch8 Classic)"),
     EVENT_SOURCE_UNVERIFIED("Для gpio_keys + STEM_PRIMARY подтверждён только source=0x101"),
     DEVICE_SOURCE_UNVERIFIED("Для gpio_keys + STEM_PRIMARY подтверждены только InputDevice.sources=0x101"),
     DEVICE_INFO_PENDING("Данные InputDevice ещё загружаются; признак isVirtual пока неизвестен"),

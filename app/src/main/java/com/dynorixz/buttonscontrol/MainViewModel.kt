@@ -15,6 +15,7 @@ import java.io.File
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val app = application as DxApplication
+    internal val watch8Probe = Watch8ButtonProbe(app, viewModelScope)
     val settings = app.settings.settings
     val diagnostics = app.diagnostics.state
     val storageError = app.settings.error

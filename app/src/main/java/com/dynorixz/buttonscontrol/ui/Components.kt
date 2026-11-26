@@ -39,14 +39,19 @@ fun actionIcon(name: String): ImageVector = when(name) {
     "play" -> Icons.Default.PlayArrow; "settings" -> Icons.Default.Settings
     else -> DxIcons.get(name)
 }
-@Composable fun DxList(title: String, subtitle: String? = null, content: LazyListScope.() -> Unit) {
+@Composable fun DxList(
+    title: String,
+    subtitle: String? = null,
+    modifier: Modifier = Modifier,
+    content: LazyListScope.() -> Unit
+) {
     val state = rememberLazyListState()
     val scope = rememberCoroutineScope()
     val focus = remember { FocusRequester() }
     LaunchedEffect(Unit) { focus.requestFocus() }
     LazyColumn(state = state, contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 28.dp, bottom = 32.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp), horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
             .onRotaryScrollEvent { scope.launch { state.scrollBy(it.verticalScrollPixels) }; true }.focusRequester(focus).focusable()) {
         item(key = "dx_header") { Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().padding(bottom = 7.dp)) {
             Text(title, fontSize = 18.sp, lineHeight = 21.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center, maxLines = 2, overflow = TextOverflow.Ellipsis)
